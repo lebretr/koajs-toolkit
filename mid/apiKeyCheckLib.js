@@ -18,9 +18,8 @@ module.exports = function (config) {
                         }
                     }
                 }
-                ctx.logger.silly(config.header + ' ' + ctx.headers[config.header] + ' not ok');
+                ctx.logger && ctx.logger.silly && ctx.logger.silly(config.header + ' ' + ctx.headers[config.header] + ' not ok');
                 const e = new Error('Unauthorized');
-                e.error='Unauthorized';
                 e.status=401;
                 throw e;
             };

@@ -1,8 +1,9 @@
 
 module.exports={
+    apiKeyCheckMid: require('./mid/apiKeyCheckLib'),
     httpServerLib: require('./lib/httpServerLib'),
     loggerLib: require('./lib/loggerLib'),
     lokiDbLib: require('./lib/lokiDbLib'),
-    proxyLib: require('./lib/proxyLib'),
-    apiKeyCheckLib: require('./lib/apiKeyCheckLib')
-}
+    proxyMid: require('./mid/proxyLib'),
+    staticLib: require('./lib/staticLib')
+};

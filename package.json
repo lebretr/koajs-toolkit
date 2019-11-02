@@ -1,6 +1,6 @@
 {
   "name": "@lebretr/koajs-toolkit",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Tools for my koaja project",
   "main": "index.js",
   "scripts": {
@@ -28,6 +28,10 @@
   },
   "peerDependencies": {
     "cookie": "^0.4.0",
+    "koa": ">=2.5",
     "winston": "3.x"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0"
   }
 }

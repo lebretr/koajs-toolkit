@@ -75,7 +75,7 @@ Note for logger:
 You can use winston lib or other lib with error and info function.  
 If you don't set any logger, we will use the [debug](https://www.npmjs.com/package/debug) lib. So the DEBUG environment variable is then used to enable debugging log. example: DEBUG="koajs-toolkit:httpServerLib" or DEBUG="koajs-toolkit:*"  
 
-## proxyLib
+## proxyMid
 
 install peerDependencies:
 
@@ -91,7 +91,7 @@ const Koa = require('koa')
     , koaBody = require('koa-body')
     , Router = require('koa-router')
     , router = new Router(),
-    { proxyLib } = require('@lebretr/koajs-toolkit')
+    { proxyMid } = require('@lebretr/koajs-toolkit')
     ;
 
 let conf={
@@ -105,23 +105,21 @@ let conf={
     }
 };
 
-router.use(proxyLib(config));
+router.use(proxyMid(config));
 
 app.use(router.routes())
     .use(router.allowedMethods());
 ...
 ```
 
-## proxyLib
-
-
+## apiKeyCheckMid
 
 in your index.js:
 
 ``` js
 const Koa = require('koa')
     , app = new Koa()
-    { apiKeyCheckLib } = require('@lebretr/koajs-toolkit')
+    { apiKeyCheckMid } = require('@lebretr/koajs-toolkit')
     ;
 
 let conf={
@@ -145,10 +143,42 @@ app.use(async (ctx,next)=>{
     }
 });
 
-app.use(apiKeyCheckLib(config));
+app.use(apiKeyCheckMid(config));
 ...
 ```
 
-if apikey sended in header is not valid, then apiKeyCheckLib throw an Error with:  
+if apikey sended in header is not valid, then apiKeyCheckMid throw an Error with:  
 error.status=401  
 error.message='Unauthorized'  
+
+## httpServerLib
+
+install peerDependencies:
+
+``` bash
+npm install --save koa@2.x koa-mount@4.x
+```
+
+in your index.js:
+
+``` js
+const Koa = require('koa')
+    , app = new Koa()
+    , { httpServerLib } = require('@lebretr/koajs-toolkit')
+    , logger={
+        error: function(m){
+            console.error(m)
+        },
+        info: function(m){
+            console.log(m)
+        }
+    }
+    ;
+
+let conf={
+    "/" : "./public"
+};
+
+await staticLib(app, conf);
+...
+```
