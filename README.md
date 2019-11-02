@@ -88,7 +88,6 @@ in your index.js:
 ``` js
 const Koa = require('koa')
     , app = new Koa()
-    , koaBody = require('koa-body')
     , Router = require('koa-router')
     , router = new Router(),
     { proxyMid } = require('@lebretr/koajs-toolkit')
@@ -127,7 +126,6 @@ let conf={
     keys:["AJG94H-FJ9-IEBWNVU7493BEJ1-8433"]
 };
 
-
 app.use(async (ctx,next)=>{
     try{
         await next();
@@ -151,7 +149,7 @@ if apikey sended in header is not valid, then apiKeyCheckMid throw an Error with
 error.status=401  
 error.message='Unauthorized'  
 
-## httpServerLib
+## staticLib
 
 install peerDependencies:
 
@@ -164,15 +162,7 @@ in your index.js:
 ``` js
 const Koa = require('koa')
     , app = new Koa()
-    , { httpServerLib } = require('@lebretr/koajs-toolkit')
-    , logger={
-        error: function(m){
-            console.error(m)
-        },
-        info: function(m){
-            console.log(m)
-        }
-    }
+    , { staticLib } = require('@lebretr/koajs-toolkit')
     ;
 
 let conf={
