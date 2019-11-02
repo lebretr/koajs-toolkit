@@ -4,7 +4,11 @@
 
 peerDependencies:
 
-- "winston": "3.x"  
+``` bash
+npm install --save winston@3.x
+```
+
+in your index.js:
 
 ``` js
 const { loggerLib } = require('@lebretr/koajs-toolkit')
@@ -26,7 +30,7 @@ await loggerLib.loggerConfigAsync(conf);
 const logger=loggerLib.logger;
 logger.error(new Error('I am an error'));
 logger.debug(new Error('Debug me!'));
-logger.warning('/!\\/!\\/!\\ Yeah /!\\/!\\/!\\);
+logger.warning('/!\\/!\\/!\\ Yeah /!\\/!\\/!\\');
 ...
 ```
 
@@ -73,9 +77,13 @@ If you don't set any logger, we will use the [debug](https://www.npmjs.com/packa
 
 ## proxyLib
 
-peerDependencies:
+install peerDependencies:
 
-- "cookie": "^0.4.0",
+``` bash
+npm install --save cookie@^0.4.0
+```
+
+in your index.js:
 
 ``` js
 const Koa = require('koa')
@@ -103,3 +111,44 @@ app.use(router.routes())
     .use(router.allowedMethods());
 ...
 ```
+
+## proxyLib
+
+
+
+in your index.js:
+
+``` js
+const Koa = require('koa')
+    , app = new Koa()
+    { apiKeyCheckLib } = require('@lebretr/koajs-toolkit')
+    ;
+
+let conf={
+    header:'x-apikey',
+    keys:["AJG94H-FJ9-IEBWNVU7493BEJ1-8433"]
+};
+
+
+app.use(async (ctx,next)=>{
+    try{
+        await next();
+    }catch(e){
+        ctx.status=e.status || 500;
+
+        let message='Internal Server Error';
+        if(ctx.status!==500){
+            message=e.message;
+        }
+
+        ctx.body={ 'code':ctx.status, message };
+    }
+});
+
+app.use(apiKeyCheckLib(config));
+...
+```
+
+if apikey sended in header is not valid, then apiKeyCheckLib throw an Error with:  
+error.status=401  
+error.message='Unauthorized'  
