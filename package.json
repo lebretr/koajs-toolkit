@@ -1,6 +1,6 @@
 {
   "name": "@lebretr/koajs-toolkit",
-  "version": "0.4.1",
+  "version": "1.0.0-alpha.0",
   "description": "Tools for my koaja project",
   "main": "index.js",
   "scripts": {
@@ -22,16 +22,19 @@
   },
   "homepage": "https://github.com/lebretr/koajs-toolkit#readme",
   "dependencies": {
-    "bluebird": "^3.7.1",
-    "debug": "^4.1.1",
-    "lodash": "^4.17.15"
+    "bluebird": "^3.7.2",
+    "debug": "^4.3.4",
+    "lodash": "^4.17.21",
+    "lokijs": "^1.5.12"
   },
   "peerDependencies": {
+    "@google-cloud/logging-winston": "^5.3.0",
     "cookie": "^0.4.0",
     "koa": ">=2.5",
     "winston": "3.x"
   },
   "devDependencies": {
-    "eslint": "^6.6.0"
+    "eslint": "^8.38.0",
+    "winston": "^3.8.2"
   }
 }
