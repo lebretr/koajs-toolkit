@@ -17,7 +17,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch sandbox loggerLib",
+            "name": "Sandbox loggerLib",
             "outputCapture": "std",
             "skipFiles": [
                 "<node_internals>/**"
@@ -30,7 +30,7 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch sandbox loggerLib cjs",
+            "name": "Sandbox loggerLib cjs",
             "outputCapture": "std",
             "skipFiles": [
                 "<node_internals>/**"

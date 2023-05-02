@@ -16,7 +16,7 @@ describe('index.js', () => {
     test('loggerLib is an instanceof winston', async () => {
         const a =  winston.createLogger({
         });
-        const logger=await new loggerLib.myLogger();
+        const logger=await new loggerLib.Logger();
         expect(logger.constructor.name === a.constructor.name).toBe(true);
     });
 

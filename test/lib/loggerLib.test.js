@@ -13,14 +13,14 @@ describe('lib/loggerLib.js', () => {
     });
 
     test('loggerLib initialisation with empty conf', async () => {
-        const logger=await new loggerLib.myLogger();
+        const logger=await new loggerLib.Logger();
         expect(logger.constructor.name === a.constructor.name).toBe(true);
     });
 
     test('loggerLib initialisation with empty conf', async () => {
         let conf={
         };
-        const logger=await new loggerLib.myLogger(conf);
+        const logger=await new loggerLib.Logger(conf);
         expect(logger.constructor.name === a.constructor.name).toBe(true);
     });
 
@@ -29,7 +29,7 @@ describe('lib/loggerLib.js', () => {
     //         "level": "info",
     //         "gg_stackdriver": true, // True if you publish your app on GCP
     //     };
-    //     const logger=await new loggerLib.myLogger(conf);
+    //     const logger=await new loggerLib.Logger(conf);
     //     logger.log('error', new Error('I am an error'));
     //     expect(typeof logger .log === "function").toBe(true);
     // });
@@ -46,7 +46,7 @@ describe('lib/loggerLib.js', () => {
                 "filename": "combined.log"
             }
         };
-        const logger=await new loggerLib.myLogger(conf);
+        const logger=await new loggerLib.Logger(conf);
         logger.log('error', new Error('I am an error'));
         
         expect(logger.constructor.name === a.constructor.name).toBe(true);
@@ -60,7 +60,7 @@ describe('lib/loggerLib.js', () => {
                 "maxsize": 1
             }
         };
-        const logger=await new loggerLib.myLogger(conf);
+        const logger=await new loggerLib.Logger(conf);
         logger.log('error', new Error('I am an error'));
         
         expect(logger.constructor.name === a.constructor.name).toBe(true);
@@ -74,7 +74,7 @@ describe('lib/loggerLib.js', () => {
                 "colorize": true
             },
         };
-        const logger=await new loggerLib.myLogger(conf);
+        const logger=await new loggerLib.Logger(conf);
         
         expect(logger.constructor.name === a.constructor.name).toBe(true);
 

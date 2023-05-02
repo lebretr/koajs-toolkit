@@ -36,10 +36,12 @@ let conf={
     }
 };
 
-const logger=await new loggerLib.myLogger(conf);
-logger.error(new Error('I am an error'));
-logger.debug(new Error('Debug me!'));
-logger.warn('/!\\/!\\/!\\ Yeah /!\\/!\\/!\\');
+(async()=>{
+    const logger=await new loggerLib.Logger(conf);
+    logger.error(new Error('I am an error'));
+    logger.debug(new Error('Debug me!'));
+    logger.warn('/!\\/!\\/!\\ Yeah /!\\/!\\/!\\');
+})();
 ...
 ```
 
@@ -70,8 +72,6 @@ let conf={
     }
 };
 
-const logger=await new loggerLib.myLogger(conf,'file');
-
 let conf2={
     "level": "info",
     "console": {
@@ -80,11 +80,15 @@ let conf2={
     },
 };
 
-const logger2=await new loggerLib.myLogger(conf2,'secondlog');
+(async()=>{
 
+    const logger=await new loggerLib.Logger(conf,'file');
 
-logger.error(new Error('I am an error'));
-logger2.error(new Error('I am an error'));
+    const logger2=await new loggerLib.Logger(conf2,'secondlog');
+
+    logger.error(new Error('I am an error'));
+    logger2.error(new Error('I am an error'));
+})();
 ...
 ```
 
