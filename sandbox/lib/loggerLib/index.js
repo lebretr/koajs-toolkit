@@ -8,23 +8,23 @@ import myLib from  './lib.js';
 // const myLib = require ('./lib.cjs'); 
 
 // (async()=>{
-    const logger=await new loggerLib.myLogger({
+    const logger=await new loggerLib.Logger({
         "level": "silly",
         "console": {
             "silent": false,
             "colorize": true
         }
     });
-    const logger2 = new loggerLib.myLoggerForContext(logger, 'BB8');
+    const logger2 = new loggerLib.LoggerForContext(logger, 'BB8');
 
-    const logger3=await new loggerLib.myLogger({
+    const logger3=await new loggerLib.Logger({
         "level": "warn",
         "console": {
             "silent": false,
             "colorize": true
         }
     },'logger3');
-    const logger4 = new loggerLib.myLoggerForContext(logger3, 'R2D2');
+    const logger4 = new loggerLib.LoggerForContext(logger3, 'R2D2');
 
 
     function logSomething(logger){

@@ -22,7 +22,6 @@ in your index.js:
 
 ``` js
 const { loggerLib } = require('@lebretr/koajs-toolkit');
-//or import { loggerLib } from  '@lebretr/koajs-toolkit';
 
 let conf={
     "level": "info",
@@ -42,6 +41,53 @@ let conf={
     logger.debug(new Error('Debug me!'));
     logger.warn('/!\\/!\\/!\\ Yeah /!\\/!\\/!\\');
 })();
+...
+```
+
+or:
+``` js
+import { loggerLib } from  '@lebretr/koajs-toolkit';
+
+let conf={
+    "level": "info",
+    "gg_stackdriver": false, // True if you publish your app on GCP. 
+    "console": {
+        "silent": false,
+        "colorize": true
+    },
+    "file":{
+        "filename": "combined.log"
+    }
+};
+
+const logger=await new loggerLib.Logger(conf);
+logger.error(new Error('I am an error'));
+logger.debug(new Error('Debug me!'));
+logger.warn('/!\\/!\\/!\\ Yeah /!\\/!\\/!\\');
+...
+```
+
+or:
+``` js
+const { loggerLib } = require('@lebretr/koajs-toolkit');
+
+let conf={
+    "level": "info",
+    "gg_stackdriver": false, // True if you publish your app on GCP. 
+    "console": {
+        "silent": false,
+        "colorize": true
+    },
+    "file":{
+        "filename": "combined.log"
+    }
+};
+
+loggerLib.LoggerAsync(conf).then((logger)=>{
+    logger.error(new Error('I am an error'));
+    logger.debug(new Error('Debug me!'));
+    logger.warn('/!\\/!\\/!\\ Yeah /!\\/!\\/!\\');
+});
 ...
 ```
 
