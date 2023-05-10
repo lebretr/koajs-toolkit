@@ -1,5 +1,7 @@
 'use strict';
 
+process.env.DEBUG = 'koajs-toolkit:*';
+
 const loggerLib = require('../../lib/loggerLib.js');
 const winston = require('winston');
 

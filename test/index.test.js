@@ -1,6 +1,8 @@
 'use strict';
 
-const{lokiDbLib, loggerLib} = require('../index');
+process.env.DEBUG = 'koajs-toolkit:*';
+
+const{lokiDbLib, loggerLib, httpServerLib} = require('../index');
 const loki = require('lokijs');
 const winston = require('winston');
 
@@ -9,15 +11,15 @@ describe('index.js', () => {
     //     expect(typeof index.apiKeyCheckMid === 'function' ).toBe(true);
     // });
 
-    // test('httpServerLib exist', async () => {
-    //     expect(typeof index.httpServerLib === 'object' ).toBe(true);
-    // });
-
     test('loggerLib is an instanceof winston', async () => {
         const a =  winston.createLogger({
         });
         const logger=await new loggerLib.Logger();
         expect(logger.constructor.name === a.constructor.name).toBe(true);
+    });
+
+    test('httpServerLib exist', async () => {
+        expect(typeof httpServerLib === 'function' ).toBe(true);
     });
 
     test('lokiDbLib is an instanceof lokijs', async () => {

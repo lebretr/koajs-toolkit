@@ -1,5 +1,7 @@
 'use strict';
 
+process.env.DEBUG = 'koajs-toolkit:*';
+
 const lokiDbLib = require('../../lib/lokiDbLib.js');
 const loki = require('lokijs');
 

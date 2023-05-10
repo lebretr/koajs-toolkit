@@ -43,6 +43,19 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Sandbox httpServerLib cjs",
+            "outputCapture": "std",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env":{
+                "DEBUG":"koajs-toolkit:*"
+            },
+            "program": "${workspaceFolder}/sandbox/lib/httpServerLib/index.cjs"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Launch Test",
             "outputCapture": "std",
             "skipFiles": [

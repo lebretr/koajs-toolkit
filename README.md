@@ -175,9 +175,9 @@ let conf={
         "port": 8080
     },
     "https": {
-        "version": "1.1",
+        "version": "1.1", // "1.1" to use http module or "2" to use http2 module
         "port": 8443,
-        "options": {
+        "options": { // See https://nodejs.org/api/http2.html#http2createsecureserveroptions-onrequesthandler or https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener
             "key": "certs/key.pem",
             "cert": "certs/cert.pem",
             "ca": "certs/ca/minica.pem",
@@ -185,6 +185,12 @@ let conf={
         }
     }
 };
+
+
+
+app.use(async (ctx,next)=>{
+    ctx.body="Hello world!";
+});
 
 httpServerLib.serve(app, conf, logger);
 ...
