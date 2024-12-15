@@ -67,7 +67,7 @@ let conf={
     }
 };
 
-httpServerLib.serve(app, config, logger);
+httpServerLib.serve(app, conf, logger);
 ...
 ```
 
@@ -76,6 +76,8 @@ You can use winston lib or other lib with error and info function.
 If you don't set any logger, we will use the [debug](https://www.npmjs.com/package/debug) lib. So the DEBUG environment variable is then used to enable debugging log. example: DEBUG="koajs-toolkit:httpServerLib" or DEBUG="koajs-toolkit:*"  
 
 ## proxyMid
+
+This is a basic Proxy Service
 
 install peerDependencies:
 
@@ -88,13 +90,11 @@ in your index.js:
 ``` js
 const Koa = require('koa')
     , app = new Koa()
-    , Router = require('koa-router')
-    , router = new Router(),
     { proxyMid } = require('@lebretr/koajs-toolkit')
     ;
 
 let conf={
-    "protocole": "https",
+    "protocol": "https",
     "hostname":"dist.server.com",
     "port": 8443,
     // "rejectUnauthorized": false,
@@ -104,10 +104,7 @@ let conf={
     }
 };
 
-router.use(proxyMid(config));
-
-app.use(router.routes())
-    .use(router.allowedMethods());
+app.use(proxyMid(conf));
 ...
 ```
 
@@ -118,7 +115,7 @@ in your index.js:
 ``` js
 const Koa = require('koa')
     , app = new Koa()
-    { apiKeyCheckMid } = require('@lebretr/koajs-toolkit')
+    , { apiKeyCheckMid } = require('@lebretr/koajs-toolkit')
     ;
 
 let conf={
@@ -141,7 +138,7 @@ app.use(async (ctx,next)=>{
     }
 });
 
-app.use(apiKeyCheckMid(config));
+app.use(apiKeyCheckMid(conf));
 ...
 ```
 
@@ -154,7 +151,7 @@ error.message='Unauthorized'
 install peerDependencies:
 
 ``` bash
-npm install --save koa@2.x koa-mount@4.x
+npm install --save koa@2.x koa-mount@4.x koa-static@5.x
 ```
 
 in your index.js:
