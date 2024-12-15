@@ -3,14 +3,14 @@ const {loggerLib} = require('../../index')
     ;
 
 let conf={
-    "level": "silly",
-    "gg_stackdriver": false, // True if you publish your app on GCP
-    "console": {
-        "silent": false,
-        "colorize": true
+    'level': 'silly',
+    'gg_stackdriver': false, // True if you publish your app on GCP
+    'console': {
+        'silent': false,
+        'colorize': true
     },
-    "file":{
-        "filename": "combined.log"
+    'file':{
+        'filename': 'combined.log'
     }
 };
 
@@ -32,10 +32,10 @@ let conf={
     logger.error({a:'b'});
     
     logger.silly('┣━━━━━━━━━━━━━━━━━━━━━━━━━┫');
-    logger.hack( '┣ hack is only in console ┫')
+    logger.hack( '┣ hack is only in console ┫');
     logger.silly('┣━━━━━━━━━━━━━━━━━━━━━━━━━┫');
-    l1=new logger.log_ctx('12345')
-    l2=new logger.log_ctx('98765')
+    let l1=new logger.log_ctx('12345');
+    let l2=new logger.log_ctx('98765');
     
     l1.warn('text 1');
     l1.warn(11);

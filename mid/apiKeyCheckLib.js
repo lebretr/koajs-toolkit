@@ -25,7 +25,7 @@ module.exports = function (config) {
             };
         }
     }
-    return async (ctx, next) =>{
+    return (async (ctx, next) =>{
         await next();
-    }
+    });
 };
