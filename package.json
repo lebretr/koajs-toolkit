@@ -1,8 +1,9 @@
 {
   "name": "@lebretr/koajs-toolkit",
-  "version": "0.4.1",
-  "description": "Tools for my koaja project",
+  "version": "0.5.0",
+  "description": "Tools for my koajs project",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "pub": "npm publish --access public",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,16 +23,16 @@
   },
   "homepage": "https://github.com/lebretr/koajs-toolkit#readme",
   "dependencies": {
-    "bluebird": "^3.7.1",
-    "debug": "^4.1.1",
-    "lodash": "^4.17.15"
+    "debug": "^4.4.0"
   },
   "peerDependencies": {
-    "cookie": "^0.4.0",
-    "koa": ">=2.5",
-    "winston": "3.x"
+    "cookie": "^0.4.2",
+    "koa": "^2.15.3",
+    "koa-mount": "^4.0.0",
+    "koa-static": "^5.0.0",
+    "winston": "^3.17.0"
   },
   "devDependencies": {
-    "eslint": "^6.6.0"
+    "eslint": "^6.8.0"
   }
 }
