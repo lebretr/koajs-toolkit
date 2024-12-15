@@ -1,8 +1,8 @@
 'use strict';
 /*
-▛▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▜
-▌                                  Service Proxy                               ▐
-▙▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▟
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                              Basic Proxy Service                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 */
 
 const clients={
@@ -10,12 +10,12 @@ const clients={
     http: require('http')
 };
 
-const Bluebird = require('bluebird')
-    , _ = require('lodash')
-    , url = require('url')
+const //_ = require('lodash')
+    // , 
+    url = require('url')
     ;
 
-module.exports = function (router, config) {
+module.exports = function (/*router,*/ config) {
     const CookieLib = require('cookie');
 
     return async function proxy (ctx) {
@@ -27,15 +27,12 @@ module.exports = function (router, config) {
         const options = {
             hostname: proxyConfig.hostname,
             port: proxyConfig.port || 443,
-            path: ctx.url,
+            path: ctx.proxyLibUrl || ctx.url,
             method: ctx.method,
-            headers: _.cloneDeep(ctx.headers),
+            // headers: JSON.parse(JSON.stringify(ctx.headers)), 
+            headers: { ... ctx.headers }, 
             rejectUnauthorized: proxyConfig.rejectUnauthorized === false || true
         };
-
-        // if (ctx.url.match(/.*login.*/)){
-        //     ctx.logger.silly(ctx.url);
-        // }
 
         delete options.headers['cookie'];
         // delete options.headers['x-request-id'];
@@ -64,7 +61,7 @@ module.exports = function (router, config) {
 
         const client = clients[protocol];
 
-        return new Bluebird((resolve,reject)=>{
+        return new Promise((resolve,reject)=>{
             const request =  client.request(options, (response) => {
                 try{
                     // res.setHeaders(response.headers);
@@ -145,5 +142,5 @@ module.exports = function (router, config) {
                 reject(e);
             });
         });
-    }
+    };
 };
