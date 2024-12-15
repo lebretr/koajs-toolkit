@@ -82,7 +82,7 @@ This is a basic Proxy Service
 install peerDependencies:
 
 ``` bash
-npm install --save cookie@^0.4.0
+npm install --save cookie@^1.0.2
 ```
 
 in your index.js:
