@@ -1,0 +1,69 @@
+{
+    // Utilisez IntelliSense pour en savoir plus sur les attributs possibles.
+    // Pointez pour afficher la description des attributs existants.
+    // Pour plus d'informations, visitez : https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "LoggerLib",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            "program": "${workspaceFolder}\\Exemples\\loggerLib\\index.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "httpServerLib",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            "program": "${workspaceFolder}\\Exemples\\httpServerLib\\index.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "staticLib",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            "program": "${workspaceFolder}\\Exemples\\staticLib\\index.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "apiKeyCheckMid",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            "program": "${workspaceFolder}\\Exemples\\apiKeyCheckMid\\index.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "proxyMidAll",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            "program": "${workspaceFolder}\\Exemples\\proxyMid\\proxyAll.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "proxyMidOneRoute",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "console": "integratedTerminal",
+            "program": "${workspaceFolder}\\Exemples\\proxyMid\\proxyOneRoute.js"
+        }
+    ]
+}
