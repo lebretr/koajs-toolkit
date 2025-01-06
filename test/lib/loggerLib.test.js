@@ -144,9 +144,9 @@ describe('lib/loggerLib.js', () => {
 });
 
 const logMessages=function(logger){
-    console.log('------------------------');
-    console.log('-    EMPTY MESSAGE     -');
-    console.log('------------------------');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣    EMPTY MESSAGE      ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
     logger.log();
     logger.log('error');
     logger.log('warn');
@@ -157,9 +157,9 @@ const logMessages=function(logger){
     logger.log('debug');
     logger.log('silly');
 
-    console.log('------------------------');
-    console.log('-       USE LOG        -');
-    console.log('------------------------');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣        LOG TXT        ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
     logger.log('error', 'I am an error');
     logger.log('warn', '/!\/!\/!\/!\/!\/!\/!\\');
     logger.log('hack', 'I hacked you !!!');
@@ -170,16 +170,16 @@ const logMessages=function(logger){
     logger.log('silly', 'lk,bm;bd;!bs!::!;@@^{#^\^@');
 
 
-    console.log('------------------------');
-    console.log('-      ERROR OBJ       -');
-    console.log('------------------------');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣       ERROR OBJ       ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
     logger.error(new Error('I am a true error'));
     logger.debug(new Error('I am a true error. Debug me!'));
     
 
-    console.log('------------------------');
-    console.log('-      DEDICATED       -');
-    console.log('------------------------');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣       DEDICATED       ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
     logger.error('I am an error');
     logger.warn('/!\/!\/!\/!\/!\/!\/!\\');
     logger.hack('I hacked you !!!');
@@ -189,9 +189,9 @@ const logMessages=function(logger){
     logger.debug('I am an error. Debug me!');
     logger.silly('lk,bm;bd;!bs!::!;@@^{#^\^@');
 
-    console.log('------------------------');
-    console.log('-       LOG  OBJ       -');
-    console.log('------------------------');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣       LOG  OBJ        ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
     logger.log('error', {a:"a",b:"b"});
     logger.log('warn', {a:"a",b:"b"});
     logger.log('hack', {a:"a",b:"b"});
@@ -201,16 +201,50 @@ const logMessages=function(logger){
     logger.log('debug', {a:"a",b:"b"});
     logger.log('silly', {a:"a",b:"b"});
 
-    console.log('------------------------');
-    console.log('-    DEDICATED  OBJ    -');
-    console.log('------------------------');
-    logger.error({a:"a",b:"b"});
-    logger.warn({a:"a",b:"b"});
-    logger.hack({a:"a",b:"b"});
-    logger.info({a:"a",b:"b"});
-    logger.http({a:"a",b:"b"});
-    logger.verbose({a:"a",b:"b"});
-    logger.debug({a:"a",b:"b"});
-    logger.silly({a:"a",b:"b"});
+    const dedicated_f= function(a){
+        logger.error(a);
+        logger.warn(a);
+        logger.hack(a);
+        logger.info(a);
+        logger.http(a);
+        logger.verbose(a);
+        logger.debug(a);
+        logger.silly(a);
+    }
     
-}
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣    DEDICATED  OBJ     ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    dedicated_f({a:"a",b:"b"});
+
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣   DEDICATED  ARRAY    ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    dedicated_f(["a","b"]);
+
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣   DEDICATED  number   ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    dedicated_f(10.99);
+
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣    DEDICATED  bool    ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    dedicated_f(true);
+
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣    DEDICATED  null    ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    dedicated_f(null);
+
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣  DEDICATED  undefined ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    dedicated_f(undefined);
+
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    console.log('┣    DEDICATED  [null]  ┫');
+    console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
+    dedicated_f([null]);
+
+};

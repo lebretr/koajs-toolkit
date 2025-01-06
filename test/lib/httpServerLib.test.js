@@ -1,7 +1,7 @@
 'use strict';
 
 process.env.DEBUG = 'koajs-toolkit:*';
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0; 
 
 const httpServerLib = require('../../lib/httpServerLib.js');
 const Koa = require('koa')
@@ -15,7 +15,7 @@ describe('lib/httpServerLib.js', () => {
 
 
     test('httpServerLib initialisation with empty conf', async () => {
-        let app = new Koa()
+        let app = new Koa();
         let conf={
         };
         app.use(async (ctx,next)=>{
@@ -24,29 +24,29 @@ describe('lib/httpServerLib.js', () => {
         let server  = new httpServerLib(app, conf);
         server && server.httpServerListenReady.then(()=>{
             server && server.httpServer && server.httpServer.close();
-        })
+        });
         server && server.httpsServerListenReady.then(()=>{
             server && server.httpsServer && server.httpsServer.close();
-        })
+        });
     });
 
 
     test('httpServerLib initialisation with conf mono file', async () => {
-        let app = new Koa()
+        let app = new Koa();
         let conf={
-            "domain": "localhost",
-            "http": {
-                "port": 8080
+            'domain': 'localhost',
+            'http': {
+                'port': 8080
             },
-            "https": {
+            'https': {
                 // "version": "1.1",
-                "version": "2",
-                "port": 8443,
-                "options": {
-                    "key": "certs/key.pem",
-                    "cert": "certs/cert.pem",
-                    "ca": "certs/ca/minica.pem",
-                    "allowHTTP1":true
+                'version': '2',
+                'port': 8443,
+                'options': {
+                    'key': 'certs/key.pem',
+                    'cert': 'certs/cert.pem',
+                    'ca': 'certs/ca/minica.pem',
+                    'allowHTTP1':true
                 }
             }
         };
@@ -57,38 +57,38 @@ describe('lib/httpServerLib.js', () => {
         server && await server.httpServerListenReady.then(async()=>{
             let agent = request.agent(server.httpServer);
             const response = await agent.get('/');
-            console.log(response.statusCode)
+            console.log(response.statusCode);
             expect(response.statusCode).toBe(200);
             expect(response.body.status).toBe(200);
             server && server.httpServer && server.httpServer.close();
-        })
+        });
         server && await server.httpsServerListenReady.then(async()=>{
             let agent = request.agent(server.httpsServer);
             const response = await agent.get('/');
-            console.log(response.statusCode)
+            console.log(response.statusCode);
             expect(response.statusCode).toBe(200);
             expect(response.body.status).toBe(200);
             server && server.httpsServer && server.httpsServer.close();
-        })
+        });
     });
 
 
     test('httpServerLib initialisation with conf multi file', async () => {
-        let app = new Koa()
+        let app = new Koa();
         let conf={
-            "domain": "localhost",
-            "http": {
-                "port": 8080
+            'domain': 'localhost',
+            'http': {
+                'port': 8080
             },
-            "https": {
+            'https': {
                 // "version": "1.1",
-                "version": "2",
-                "port": 8443,
-                "options": {
-                    "key": "certs/key.pem",
-                    "cert": "certs/cert.pem",
-                    "ca": ["certs/ca/minica.pem","certs/ca/minica_2.pem"],
-                    "allowHTTP1":true
+                'version': '2',
+                'port': 8443,
+                'options': {
+                    'key': 'certs/key.pem',
+                    'cert': 'certs/cert.pem',
+                    'ca': ['certs/ca/minica.pem','certs/ca/minica_2.pem'],
+                    'allowHTTP1':true
                 }
             }
         };
@@ -99,19 +99,19 @@ describe('lib/httpServerLib.js', () => {
         server && await server.httpServerListenReady.then(async()=>{
             let agent = request.agent(server.httpServer);
             const response = await agent.get('/');
-            console.log(response.statusCode)
+            console.log(response.statusCode);
             expect(response.statusCode).toBe(200);
             expect(response.body.status).toBe(200);
             server && server.httpServer && server.httpServer.close();
-        })
+        });
         server && await server.httpsServerListenReady.then(async()=>{
             let agent = request.agent(server.httpsServer);
             const response = await agent.get('/');
-            console.log(response.statusCode)
+            console.log(response.statusCode);
             expect(response.statusCode).toBe(200);
             expect(response.body.status).toBe(200);
             server && server.httpsServer && server.httpsServer.close();
-        })
+        });
     });
 
 
