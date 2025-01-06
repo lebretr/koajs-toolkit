@@ -85,6 +85,19 @@ describe('lib/loggerLib.js', () => {
         
     });
 
+    test('loggerLib Async initialisation with conf', async () => {
+        loggerLib.LoggerAsync({
+            "level": "silly",
+            "console": {
+                "silent": false,
+                "colorize": true
+            }
+        }).then((loggerAsync)=>{
+            loggerAsync.log('error', 'I am an error');
+            expect(loggerAsync.constructor.name === a.constructor.name).toBe(true);
+        });
+    });
+
     test('loggerLib initialisation with getLogger', async () => {
         let conf={
             "level": "info",
@@ -169,6 +182,16 @@ const logMessages=function(logger){
     logger.log('debug', 'I am an error. Debug me!');
     logger.log('silly', 'lk,bm;bd;!bs!::!;@@^{#^\^@');
 
+    
+    logger.log({level:'error', message:'I am an error'});
+    logger.log({level:'warn', message:'/!\/!\/!\/!\/!\/!\/!\\'});
+    logger.log({level:'hack', message:'I hacked you !!!'});
+    logger.log({level:'info', message:'here is just an info'});
+    logger.log({level:'http', message:'here is http://test/'});
+    logger.log({level:'verbose', message:'here is just an verbose message and I can talk a lot again'});
+    logger.log({level:'debug', message:'I am an error. Debug me!'});
+    logger.log({level:'silly', message:'lk,bm;bd;!bs!::!;@@^{#^\^@'});
+
 
     console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
     console.log('┣       ERROR OBJ       ┫');
@@ -211,7 +234,7 @@ const logMessages=function(logger){
         logger.debug(a);
         logger.silly(a);
     }
-    
+
     console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
     console.log('┣    DEDICATED  OBJ     ┫');
     console.log('┣━━━━━━━━━━━━━━━━━━━━━━━┫');
