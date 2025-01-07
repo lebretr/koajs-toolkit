@@ -10,9 +10,7 @@
 //     http: require('http')
 // };
 
-// const Bluebird = require('bluebird')
-//     , _ = require('lodash')
-//     , url = require('url')
+// const url = require('url')
 //     ;
 
 // export default  function (router, config) {
@@ -29,7 +27,9 @@
 //             port: proxyConfig.port || 443,
 //             path: ctx.url,
 //             method: ctx.method,
-//             headers: _.cloneDeep(ctx.headers),
+//             // headers: _.cloneDeep(ctx.headers),
+//             // headers: JSON.parse(JSON.stringify(ctx.headers)), 
+//             headers: { ... ctx.headers }, 
 //             rejectUnauthorized: proxyConfig.rejectUnauthorized === false || true
 //         };
 
@@ -64,7 +64,7 @@
 
 //         const client = clients[protocol];
 
-//         return new Bluebird((resolve,reject)=>{
+//         return new Promise((resolve,reject)=>{
 //             const request =  client.request(options, (response) => {
 //                 try{
 //                     // res.setHeaders(response.headers);
