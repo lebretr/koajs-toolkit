@@ -1,5 +1,52 @@
 # koajs-toolkit
 
+## httpServerLib
+
+``` js
+const Koa = require('koa')
+    , app = new Koa()
+    , { httpServerLib } = require('@lebretr/koajs-toolkit')
+    , logger={
+        error: function(m){
+            console.error(m)
+        },
+        info: function(m){
+            console.log(m)
+        }
+    }
+    ;
+
+let conf={
+    "domain": "localhost",
+    "http": {
+        "port": 8080
+    },
+    "https": {
+        "version": "1.1", // "1.1" to use http module or "2" to use http2 module
+        "port": 8443,
+        "options": { // See https://nodejs.org/api/http2.html#http2createsecureserveroptions-onrequesthandler or https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener
+            "key": "certs/key.pem",
+            "cert": "certs/cert.pem",
+            "ca": "certs/ca/minica.pem",
+            "allowHTTP1":true
+        }
+    }
+};
+
+
+
+app.use(async (ctx,next)=>{
+    ctx.body="Hello world!";
+});
+
+httpServerLib.serve(app, conf, logger);
+...
+```
+
+Note for logger:  
+You can use winston lib or other lib with error and info function.  
+If you don't set any logger, we will use the [debug](https://www.npmjs.com/package/debug) lib. So the DEBUG environment variable is then used to enable debugging log. example: DEBUG="koajs-toolkit:httpServerLib" or DEBUG="koajs-toolkit:*"  
+
 ## loggerLib
 
 ``` bash
@@ -153,52 +200,47 @@ logger2.error(new Error('I am an error'));
 ...
 ```
 
-## httpServerLib
-
+You can also contextualize your log. For example, having a "context information" as an "request uid" each time you log something in kao.js, express.js or others:
 ``` js
 const Koa = require('koa')
     , app = new Koa()
-    , { httpServerLib } = require('@lebretr/koajs-toolkit')
-    , logger={
-        error: function(m){
-            console.error(m)
-        },
-        info: function(m){
-            console.log(m)
-        }
-    }
+    , { httpServerLib, loggerLib } = require('@lebretr/koajs-toolkit')
+    , { v4 } require('uuid');
     ;
 
-let conf={
-    "domain": "localhost",
-    "http": {
-        "port": 8080
-    },
-    "https": {
-        "version": "1.1", // "1.1" to use http module or "2" to use http2 module
-        "port": 8443,
-        "options": { // See https://nodejs.org/api/http2.html#http2createsecureserveroptions-onrequesthandler or https://nodejs.org/api/http.html#httpcreateserveroptions-requestlistener
-            "key": "certs/key.pem",
-            "cert": "certs/cert.pem",
-            "ca": "certs/ca/minica.pem",
-            "allowHTTP1":true
-        }
+const logger=await new loggerLib.Logger({
+    "level": "silly",
+    "console": {
+        "silent": false,
+        "colorize": true
     }
-};
-
-
-
-app.use(async (ctx,next)=>{
-    ctx.body="Hello world!";
 });
 
-httpServerLib.serve(app, conf, logger);
-...
-```
+app.use(async (ctx,next)=>{
+    ctx.uuid=v4();
+    ctx.logger=new loggerLib.LoggerForContext(logger, ctx.uuid);
+    next();
+});
 
-Note for logger:  
-You can use winston lib or other lib with error and info function.  
-If you don't set any logger, we will use the [debug](https://www.npmjs.com/package/debug) lib. So the DEBUG environment variable is then used to enable debugging log. example: DEBUG="koajs-toolkit:httpServerLib" or DEBUG="koajs-toolkit:*"  
+app.use(async (ctx,next)=>{
+    //DO SOMETHING ...
+    next();
+});
+
+app.use(async (ctx,next)=>{
+    ctx.info('We log something before send a response');
+    ctx.body={ 'status':200 };
+});
+
+let server  = new httpServerLib(app, conf, logger);
+
+server && server.httpServerListenReady.then(async()=>{
+    let agent = request.agent(server.httpServer);
+    const response = await agent.get('/');
+    server && server.httpServer && server.httpServer.close();
+})
+
+```
 
 ## proxyMid
 
