@@ -17,6 +17,32 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Sandbox staticLib",
+            "outputCapture": "std",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env":{
+                "DEBUG":"koajs-toolkit:*"
+            },
+            "program": "${workspaceFolder}/sandbox/lib/staticLib/index.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Sandbox staticLib cjs",
+            "outputCapture": "std",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env":{
+                "DEBUG":"koajs-toolkit:*"
+            },
+            "program": "${workspaceFolder}/sandbox/lib/staticLib/index.cjs"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Sandbox loggerLib",
             "outputCapture": "std",
             "skipFiles": [

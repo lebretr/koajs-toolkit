@@ -6,5 +6,5 @@ module.exports =  {
     loggerLib: require('./lib/loggerLib'),
     lokiDbLib: require('./lib/lokiDbLib'),
     // proxyMid: require('./mid/proxyLib'),
-    // staticLib: require('./lib/staticLib')
+    staticLib: require('./lib/staticLib')
 };
