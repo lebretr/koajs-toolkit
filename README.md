@@ -7,11 +7,11 @@ const Koa = require('koa')
     , app = new Koa()
     , { httpServerLib } = require('@lebretr/koajs-toolkit')
     , logger={
-        error: function(m){
-            console.error(m)
+        error: function(...args){
+            console.error(...args)
         },
-        info: function(m){
-            console.log(m)
+        info: function(...args){
+            console.log(...args)
         }
     }
     ;
@@ -204,42 +204,64 @@ You can also contextualize your log. For example, having a "context information"
 ``` js
 const Koa = require('koa')
     , app = new Koa()
+    , { v4 : uuidv4 } = require('uuid')
     , { httpServerLib, loggerLib } = require('@lebretr/koajs-toolkit')
-    , { v4 } require('uuid');
     ;
 
-const logger=await new loggerLib.Logger({
-    "level": "silly",
-    "console": {
-        "silent": false,
-        "colorize": true
-    }
-});
+(async()=>{
+    let confL={
+        "level": "silly",
+        "gg_stackdriver": false, // True if you publish your app on GCP. 
+        "console": {
+            "silent": false,
+            "colorize": true
+        },
+        "file":{
+            "filename": "combined.log"
+        }
+    };
 
-app.use(async (ctx,next)=>{
-    ctx.uuid=v4();
-    ctx.logger=new loggerLib.LoggerForContext(logger, ctx.uuid);
-    next();
-});
+    const logger=await new loggerLib.Logger(confL);
 
-app.use(async (ctx,next)=>{
-    //DO SOMETHING ...
-    next();
-});
+    let conf={
+        "domain": "localhost",
+        "http": {
+            "port": 8080
+        },
+        "https": {
+            // "version": "1.1",
+            "version": "2",
+            "port": 8443,
+            "options": {
+                "key": "certs/key.pem",
+                "cert": "certs/cert.pem",
+                "ca": "certs/ca/minica.pem",
+                "allowHTTP1":true
+            }
+        }
+    };
 
-app.use(async (ctx,next)=>{
-    ctx.info('We log something before send a response');
-    ctx.body={ 'status':200 };
-});
+    app.use(async (ctx,next)=>{
+        ctx.uuid=uuidv4();
+        ctx.logger=new loggerLib.LoggerForContext(logger, ctx.uuid);
+        next();
+    });
 
-let server  = new httpServerLib(app, conf, logger);
 
-server && server.httpServerListenReady.then(async()=>{
-    let agent = request.agent(server.httpServer);
-    const response = await agent.get('/');
-    server && server.httpServer && server.httpServer.close();
-})
+    app.use(async (ctx,next)=>{
+        ctx.logger.verbose('log something during DO SOMETHING');
+        // DO SOMETHING
+        next();
+    });
 
+
+    app.use(async (ctx,next)=>{
+        ctx.logger.verbose('log something before send response');
+        ctx.body={ 'status':200, ctx_uuid: ctx.uuid };
+    });
+
+    new httpServerLib(app, conf, logger);
+})();
 ```
 
 ## proxyMid

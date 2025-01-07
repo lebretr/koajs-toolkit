@@ -82,13 +82,37 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Test",
+            "name": "Sandbox httpServerLib js",
             "outputCapture": "std",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "env": { "NODE_OPTIONS":"--experimental-vm-modules" },
-            "program": "${workspaceFolder}/node_modules/.bin/jest"
+            "env":{
+                "DEBUG":"koajs-toolkit:*"
+            },
+            "program": "${workspaceFolder}/sandbox/lib/httpServerLib/index.js"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch Tests",
+            "outputCapture": "std",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+            "args": ["--runInBand"]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Launch 1 Test",
+            "outputCapture": "std",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+            "args": ["--runInBand","index.test.js"]
         }
     ]
 }

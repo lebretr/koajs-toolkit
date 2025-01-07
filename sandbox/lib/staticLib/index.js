@@ -1,28 +1,32 @@
 
 import Koa from 'koa';
-import request from 'supertest'
 import koatool from  '../../../index.js';
 
 const app = new Koa()
     , staticLib=koatool.staticLib
     , httpServerLib=koatool.httpServerLib
     , logger={
-        error: function(m){
-            console.error(m);
+        error: function(...args){
+            console.error(...args);
         },
-        info: function(m){
-            console.log(m);
+        info: function(...args){
+            console.log(...args);
         }
     }
     ;
 
 let conf={
-    '/' : './Exemples/staticLib/public'
+    '/' : './sandbox/lib/staticLib/public'
 };
 
 // (async function(){
     await new staticLib(app, conf);
 
+    app.use(async (ctx,next)=>{
+        logger.info('app.use');
+        ctx.status=404;
+        next();
+    });
 
     let app_conf={
         'domain': 'localhost',
@@ -41,17 +45,6 @@ let conf={
         }
     };
 
-    let server  = new httpServerLib(app, app_conf, logger);
-
-    server && server.httpServerListenReady.then(async()=>{
-        let agent = request.agent(server.httpServer);
-        const response = await agent.get('/');
-        server && server.httpServer && server.httpServer.close();
-    }).catch(async(err)=>{
-        console.log(err);
-        let agent = request.agent(server.httpServer);
-        const response = await agent.get('/');
-        server && server.httpServer && server.httpServer.close();
-    });
+    new httpServerLib(app, app_conf, logger);
 
 // })();

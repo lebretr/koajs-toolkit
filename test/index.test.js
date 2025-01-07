@@ -2,9 +2,10 @@
 
 process.env.DEBUG = 'koajs-toolkit:*';
 
-const{lokiDbLib, loggerLib, httpServerLib} = require('../index');
+const{lokiDbLib, loggerLib, httpServerLib, staticLib} = require('../index');
 const loki = require('lokijs');
 const winston = require('winston');
+const Koa = require('koa');
 
 describe('index.js', () => {
     // test('apiKeyCheckMid exist', async () => {
@@ -31,7 +32,10 @@ describe('index.js', () => {
     //     expect(typeof index.proxyMid === 'function' ).toBe(true);
     // });
 
-    // test('staticLib exist', async () => {
-    //     expect(typeof index.staticLib === 'function' ).toBe(true);
-    // });
+    test('staticLib exist', async () => {
+        let app = new Koa();
+        let conf={};
+        let a = await new staticLib(app,{});
+        expect(true === true).toBe(true);
+    });
 });

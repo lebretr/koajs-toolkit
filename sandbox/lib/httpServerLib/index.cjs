@@ -1,9 +1,8 @@
 const Koa = require('koa')
     , app = new Koa()
-    , app2 = new Koa()
-    , httpServerLib = require('../../../lib/httpServerLib.js')
-    , request = require('supertest')
-    // , { httpServerLib } = require('@lebretr/koajs-toolkit')
+    , {  v4 : uuidv4  } = require('uuid')
+    // , { httpServerLib, loggerLib } = require('@lebretr/koajs-toolkit')
+    , { httpServerLib, loggerLib } = require('../../../index.js')
     // , logger={
     //     error: function(...args){
     //         console.error(...args)
@@ -18,10 +17,6 @@ const Koa = require('koa')
     ;
 
 (async()=>{
-    // const { loggerLib } = require('@lebretr/koajs-toolkit');
-    //or import { loggerLib } from  '@lebretr/koajs-toolkit';
-    const loggerLib = require('../../../lib/loggerLib.js');
-
     let confL={
         "level": "silly",
         "gg_stackdriver": false, // True if you publish your app on GCP. 
@@ -53,45 +48,25 @@ const Koa = require('koa')
             }
         }
     };
-    let conf2={
-        "domain": "localhost",
-        "http": {
-            "port": 8080
-        }
-    };
+
+    app.use(async (ctx,next)=>{
+        ctx.uuid=uuidv4();
+        ctx.logger=new loggerLib.LoggerForContext(logger, ctx.uuid);
+        next();
+    });
 
 
     app.use(async (ctx,next)=>{
-        ctx.body={ 'status':200 };
+        ctx.logger.verbose('log something during DO SOMETHING');
+        // DO SOMETHING
+        next();
     });
 
 
-    app2.use(async (ctx,next)=>{
-        ctx.body={ 'status':200 };
+    app.use(async (ctx,next)=>{
+        ctx.logger.verbose('log something before send response');
+        ctx.body={ 'status':200, ctx_uuid: ctx.uuid };
     });
 
-    // new httpServerLib(app, conf, logger);
-
-    let server  = new httpServerLib(app, conf, logger);
-
-    server && server.httpServerListenReady.then(async()=>{
-        let agent = request.agent(server.httpServer);
-        const response = await agent.get('/');
-        server && server.httpServer && server.httpServer.close();
-    })
-
-    let server2  = new httpServerLib(app2, conf2, logger);
-
-    server2 && server2.httpServerListenReady.then(async()=>{
-        let agent = request.agent(server2.httpServer);
-        const response = await agent.get('/');
-        server2 && server2.httpServer && server2.httpServer.close();
-    }).catch(async(err)=>{
-        console.log(err);
-        let agent = request.agent(server2.httpServer);
-        const response = await agent.get('/');
-        server2 && server2.httpServer && server2.httpServer.close();
-    })
-
-    // new httpServerLib(app, conf2, logger);
+    new httpServerLib(app, conf, logger);
 })();

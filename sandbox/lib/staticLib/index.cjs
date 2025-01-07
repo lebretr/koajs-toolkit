@@ -2,11 +2,11 @@ const Koa = require('koa')
     , app = new Koa()
     , { httpServerLib, staticLib } = require('../../../index')
     , logger={
-        error: function(m){
-            console.error(m);
+        error: function(...args){
+            console.error(...args);
         },
-        info: function(m){
-            console.log(m);
+        info: function(...args){
+            console.log(...args);
         }
     }
     ;
@@ -17,6 +17,12 @@ let conf={
 
 (async function(){
     await new staticLib(app, conf);
+    
+    app.use(async (ctx,next)=>{
+        logger.info('app.use');
+        ctx.status=404;
+        next();
+    });
 
 
     let app_conf={
