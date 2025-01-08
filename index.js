@@ -13,3 +13,4 @@ exports.httpServerLib=require('./lib/httpServerLib');
 exports.loggerLib=require('./lib/loggerLib');
 exports.lokiDbLib=require('./lib/lokiDbLib');
 exports.staticLib=require('./lib/staticLib');
+exports.apiKeyCheckMid=require('./mid/apiKeyCheckLib');

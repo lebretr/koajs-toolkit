@@ -2,6 +2,16 @@
 
 ## httpServerLib
 
+``` bash
+npm install --save @lebretr/koajs-toolkit
+```
+
+peerDependencies:
+
+``` bash
+npm install --save koa@2.x
+```
+
 ``` js
 const Koa = require('koa')
     , app = new Koa()
@@ -201,6 +211,11 @@ logger2.error(new Error('I am an error'));
 ```
 
 You can also contextualize your log. For example, having a "context information" as an "request uid" each time you log something in kao.js, express.js or others:
+
+``` bash
+npm install --save uuid
+```
+
 ``` js
 const Koa = require('koa')
     , app = new Koa()
@@ -244,14 +259,14 @@ const Koa = require('koa')
     app.use(async (ctx,next)=>{
         ctx.uuid=uuidv4();
         ctx.logger=new loggerLib.LoggerForContext(logger, ctx.uuid);
-        next();
+        await next();
     });
 
 
     app.use(async (ctx,next)=>{
         ctx.logger.verbose('log something during DO SOMETHING');
         // DO SOMETHING
-        next();
+        await next();
     });
 
 
@@ -266,10 +281,14 @@ const Koa = require('koa')
 
 ## proxyMid
 
-install peerDependencies:
+``` bash
+npm install --save @lebretr/koajs-toolkit
+```
+
+peerDependencies:
 
 ``` bash
-npm install --save cookie@^0.4.0
+npm install --save koa@2.x koa-router cookie@^0.4.0
 ```
 
 in your index.js:
@@ -293,7 +312,7 @@ let conf={
     }
 };
 
-router.use(proxyMid(config));
+router.use(new proxyMid(config));
 
 app.use(router.routes())
     .use(router.allowedMethods());
@@ -301,6 +320,16 @@ app.use(router.routes())
 ```
 
 ## apiKeyCheckMid
+
+``` bash
+npm install --save @lebretr/koajs-toolkit
+```
+
+peerDependencies:
+
+``` bash
+npm install --save koa@2.x
+```
 
 in your index.js:
 
@@ -330,7 +359,7 @@ app.use(async (ctx,next)=>{
     }
 });
 
-app.use(apiKeyCheckMid(config));
+app.use(new apiKeyCheckMid(config));
 ...
 ```
 
@@ -340,7 +369,11 @@ error.message='Unauthorized'
 
 ## staticLib
 
-install peerDependencies:
+``` bash
+npm install --save @lebretr/koajs-toolkit
+```
+
+peerDependencies:
 
 ``` bash
 npm install --save koa@2.x koa-mount@4.x

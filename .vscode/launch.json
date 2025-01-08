@@ -101,7 +101,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
-            "args": ["--runInBand"]
+            "args": ["--detectOpenHandles"]
         },
         {
             "type": "node",
@@ -112,7 +112,7 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
-            "args": ["--runInBand","index.test.js"]
+            "args": ["--detectOpenHandles", "apiKeyCheck"] //, "--coverage", "--runInBand",
         }
     ]
 }

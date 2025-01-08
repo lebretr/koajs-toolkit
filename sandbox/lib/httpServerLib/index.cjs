@@ -52,14 +52,14 @@ const Koa = require('koa')
     app.use(async (ctx,next)=>{
         ctx.uuid=uuidv4();
         ctx.logger=new loggerLib.LoggerForContext(logger, ctx.uuid);
-        next();
+        await next();
     });
 
 
     app.use(async (ctx,next)=>{
         ctx.logger.verbose('log something during DO SOMETHING');
         // DO SOMETHING
-        next();
+        await next();
     });
 
 

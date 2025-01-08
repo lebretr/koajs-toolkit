@@ -7,7 +7,7 @@
   "scripts": {
     "pub": "npm publish --access public",
     "test": "./node_modules/.bin/jest --detectOpenHandles --coverage ",
-    "test_esm": "node --experimental-vm-modules node_modules/.bin/jest --coverage --detectOpenHandles ",
+    "test_esm": "node --experimental-vm-modules node_modules/.bin/jest --detectOpenHandles --coverage ",
     "Win_test": ".\\node_modules\\.bin\\jest --detectOpenHandles --coverage "
   },
   "repository": {

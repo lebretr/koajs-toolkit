@@ -25,7 +25,7 @@ let conf={
     app.use(async (ctx,next)=>{
         logger.info('app.use');
         ctx.status=404;
-        next();
+        await next();
     });
 
     let app_conf={

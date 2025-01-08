@@ -9,6 +9,10 @@ const Koa = require('koa')
     , request = require('supertest')
     ;
 
+let httpPort=8080
+  , httpsPort=8443
+  ;
+
 describe('lib/staticLib.js', () => {
     test('staticLib Test', async () => {
         expect(1===1).toBe(true);
@@ -30,11 +34,11 @@ describe('lib/staticLib.js', () => {
         });
         let server  = new httpServerLib(app, conf);
         //http tests
-        server && server.httpServerListenReady.then(()=>{
+        server && await server.httpServerListenReady.then(()=>{
             server && server.httpServer && server.httpServer.close();
         });
         //https tests
-        server && server.httpsServerListenReady.then(()=>{
+        server && await server.httpsServerListenReady.then(()=>{
             server && server.httpsServer && server.httpsServer.close();
         });
     });
@@ -45,12 +49,12 @@ describe('lib/staticLib.js', () => {
         let conf={
             'domain': 'localhost',
             'http': {
-                'port': 8080
+                'port': httpPort++
             },
             'https': {
                 // "version": "1.1",
                 'version': '2',
-                'port': 8443,
+                'port': httpsPort++,
                 'options': {
                     'key': 'certs/key.pem',
                     'cert': 'certs/cert.pem',
@@ -98,12 +102,12 @@ describe('lib/staticLib.js', () => {
         let conf={
             'domain': 'localhost',
             'http': {
-                'port': 8080
+                'port': httpPort++
             },
             'https': {
                 // "version": "1.1",
                 'version': '2',
-                'port': 8443,
+                'port': httpsPort++,
                 'options': {
                     'key': 'certs/key.pem',
                     'cert': 'certs/cert.pem',

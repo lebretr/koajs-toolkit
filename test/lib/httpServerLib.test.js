@@ -8,6 +8,10 @@ const Koa = require('koa')
     , request = require('supertest')
     ;
 
+let httpPort=8080
+  , httpsPort=8443
+  ;
+
 describe('lib/httpServerLib.js', () => {
     test('httpServerLib Test', async () => {
         expect(1===1).toBe(true);
@@ -22,10 +26,10 @@ describe('lib/httpServerLib.js', () => {
             ctx.body={ 'status':ctx.status };
         });
         let server  = new httpServerLib(app, conf);
-        server && server.httpServerListenReady.then(()=>{
+        server && await server.httpServerListenReady.then(()=>{
             server && server.httpServer && server.httpServer.close();
         });
-        server && server.httpsServerListenReady.then(()=>{
+        server && await server.httpsServerListenReady.then(()=>{
             server && server.httpsServer && server.httpsServer.close();
         });
     });
@@ -36,12 +40,12 @@ describe('lib/httpServerLib.js', () => {
         let conf={
             'domain': 'localhost',
             'http': {
-                'port': 8080
+                'port': httpPort++
             },
             'https': {
                 // "version": "1.1",
                 'version': '2',
-                'port': 8443,
+                'port': httpsPort++,
                 'options': {
                     'key': 'certs/key.pem',
                     'cert': 'certs/cert.pem',
@@ -57,6 +61,7 @@ describe('lib/httpServerLib.js', () => {
         server && await server.httpServerListenReady.then(async()=>{
             let agent = request.agent(server.httpServer);
             const response = await agent.get('/');
+            console.log(response);
             expect(response.statusCode).toBe(200);
             expect(response.body.status).toBe(200);
             server && server.httpServer && server.httpServer.close();
@@ -64,6 +69,7 @@ describe('lib/httpServerLib.js', () => {
         server && await server.httpsServerListenReady.then(async()=>{
             let agent = request.agent(server.httpsServer);
             const response = await agent.get('/');
+            console.log(response);
             expect(response.statusCode).toBe(200);
             expect(response.body.status).toBe(200);
             server && server.httpsServer && server.httpsServer.close();
@@ -76,12 +82,12 @@ describe('lib/httpServerLib.js', () => {
         let conf={
             'domain': 'localhost',
             'http': {
-                'port': 8080
+                'port': httpPort++
             },
             'https': {
                 // "version": "1.1",
                 'version': '2',
-                'port': 8443,
+                'port': httpsPort++,
                 'options': {
                     'key': 'certs/key.pem',
                     'cert': 'certs/cert.pem',
@@ -97,6 +103,7 @@ describe('lib/httpServerLib.js', () => {
         server && await server.httpServerListenReady.then(async()=>{
             let agent = request.agent(server.httpServer);
             const response = await agent.get('/');
+            console.log(response);
             expect(response.statusCode).toBe(200);
             expect(response.body.status).toBe(200);
             server && server.httpServer && server.httpServer.close();
@@ -104,6 +111,7 @@ describe('lib/httpServerLib.js', () => {
         server && await server.httpsServerListenReady.then(async()=>{
             let agent = request.agent(server.httpsServer);
             const response = await agent.get('/');
+            console.log(response);
             expect(response.statusCode).toBe(200);
             expect(response.body.status).toBe(200);
             server && server.httpsServer && server.httpsServer.close();
@@ -117,7 +125,7 @@ describe('lib/httpServerLib.js', () => {
     //     let conf={
     //         "domain": "localhost",
     //         "http": {
-    //             "port": 8080
+    //             "port": httpPort++
     //         }
     //     };
     //     app.use(async (ctx,next)=>{
